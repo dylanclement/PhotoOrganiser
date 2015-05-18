@@ -47,7 +47,7 @@
             this.sourceFolderText.Name = "sourceFolderText";
             this.sourceFolderText.Size = new System.Drawing.Size(441, 20);
             this.sourceFolderText.TabIndex = 0;
-            this.sourceFolderText.Text = "D:\\Temp\\Dylan Pictures";
+            this.sourceFolderText.Text = "C:\\Temp\\Camera";
             // 
             // label1
             // 
@@ -93,7 +93,6 @@
             this.destinationFolderText.Name = "destinationFolderText";
             this.destinationFolderText.Size = new System.Drawing.Size(441, 20);
             this.destinationFolderText.TabIndex = 3;
-            this.destinationFolderText.Text = "D:\\Temp\\Test";
             // 
             // goButton
             // 

@@ -26,6 +26,7 @@ namespace PhotoOrganiser
         public MainForm()
         {
             InitializeComponent();
+            destinationFolderText.Text = Environment.GetFolderPath(Environment.SpecialFolder.MyPictures);
         }
 
         private IList<ListEntry> filesToCopy = new List<ListEntry>();
