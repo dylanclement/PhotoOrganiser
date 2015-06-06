@@ -36,18 +36,24 @@ namespace PhotoOrganiser
         public static DateTime GetDateTakenFromImage(string path)
         {
             using (FileStream fs = new FileStream(path, FileMode.Open, FileAccess.Read))
-            using (Image myImage = Image.FromStream(fs, false, false))
             {
-                if (myImage.PropertyIdList.Any(x => x == 36867))
+                if (fs.Length <= 0)
                 {
-                    PropertyItem propItem = myImage.GetPropertyItem(36867);
-                    string dateTaken = r.Replace(Encoding.UTF8.GetString(propItem.Value), "-", 2);
-                    return DateTime.Parse(dateTaken);
-                } 
-                else
+                    throw new Exception("File length is 0");
+                }
+                using (Image myImage = Image.FromStream(fs, false, false))
                 {
-                    MessageBox.Show("Unable to find date data for image " + path + " : " + GetDateTakenFromFile(path));
-                    return GetDateTakenFromFile(path);
+                    if (myImage.PropertyIdList.Any(x => x == 36867))
+                    {
+                        PropertyItem propItem = myImage.GetPropertyItem(36867);
+                        string dateTaken = r.Replace(Encoding.UTF8.GetString(propItem.Value), "-", 2);
+                        return DateTime.Parse(dateTaken);
+                    }
+                    else
+                    {
+                        MessageBox.Show("Unable to find date data for image " + path + " : " + GetDateTakenFromFile(path));
+                        return GetDateTakenFromFile(path);
+                    }
                 }
             }
         }
@@ -129,13 +135,20 @@ namespace PhotoOrganiser
         public void ProcessFile(string path)
         {
             var extension = Path.GetExtension(path).ToLower();
-            if (extension == ".jpg")
+            try
             {
-                filesToCopy.Add(new ListEntry { FileName = path, Destination = GetDestinationName(destinationFolderText.Text, path, GetDateTakenFromImage(path)) });
-            }
-            else if (extension == ".mpg" || extension == ".mp4" || extension == ".mov")
+
+                if (extension == ".jpg")
+                {
+                    filesToCopy.Add(new ListEntry { FileName = path, Destination = GetDestinationName(destinationFolderText.Text, path, GetDateTakenFromImage(path)) });
+                }
+                else if (extension == ".mpg" || extension == ".mp4" || extension == ".mov")
+                {
+                    filesToCopy.Add(new ListEntry { FileName = path, Destination = GetDestinationName(destinationFolderText.Text, path, GetDateTakenFromFile(path)) });
+                }
+            } catch (Exception ex)
             {
-                filesToCopy.Add(new ListEntry { FileName = path, Destination = GetDestinationName(destinationFolderText.Text, path, GetDateTakenFromFile(path)) });
+                MessageBox.Show("Error Occured: " + ex.Message);
             }
         }
     }
