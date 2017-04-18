@@ -1,0 +1,13 @@
+{
+  "name": "photo-organiser.js",
+  "version": "0.0.0",
+  "description": "Photo-organiser.js",
+  "main": "app.js",
+  "author": {
+    "name": "dylan"
+  },
+  "dependencies": {
+    "exif": "^0.6.0",
+    "moment": "^2.18.1"
+  }
+}
